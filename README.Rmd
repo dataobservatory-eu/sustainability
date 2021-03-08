@@ -13,7 +13,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-# regions
+# Demo Material for Sustainability Observatory
 
 <!-- badges: start -->
 <!-- badges: end -->
