@@ -1,0 +1,35 @@
+---
+title: "Joining Harmonized Attitude Data With Air Pollution Data"
+author: "Daniel Antal, CFA"
+date: "3/8/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r pkg-load, message=FALSE}
+library(dplyr)
+```
+
+
+## Load the Data
+
+
+```{r}
+load(file.path("data", "air_pollutants.rda")) ## good practice to use system-independent file.path
+climate_panel_recoded <- readRDS( file.path("data-raw", "climate-panel_recoded.rds") )
+names ( climate_panel_recoded)
+```
+
+```{r joining }
+
+regional_climate_dataset <- air_pollutants %>%
+  rename ( code_2016 = .data$region_nuts_codes) %>%
+  left_join ( climate_panel_recoded, by = 'code_2016' ) 
+
+summary(regional_climate_dataset)
+  
+```
+

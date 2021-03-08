@@ -1,0 +1,136 @@
+---
+title: "Survey harmonization"
+author: "Daniel Antal, CFA"
+date: "2/20/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(retroharmonize)  # retrospective survey harmonization 
+library(dplyr)           # data wrangling
+library(rlang)           # non-standard evaluation and consistent types, errors
+```
+
+## Survey harmonization
+
+Retrospective survey harmonization means that we are harmonizing the data of survey responses given to the same survey questions, in the same population, in the same geography. The retroharmonize package helps you with this. 
+
+We are going to use four Eurobarometer survey's microdata.  You will hae to go to the GESIS website and after carefully reading the terms of use, downloading it to your own computer.  We assume that you downloaded it to a `gesis_dir`.  We show but do not execute the code here to import the SPSS files into a machine-readable format. (The R-compatible data files can be reached here.)
+
+```{r import_spss, eval=FALSE}
+climate_change_files <- c("ZA5877_v2-0-0.sav", "ZA6595_v3-0-0.sav",  "ZA6861_v1-2-0.sav", 
+                     "ZA7488_v1-0-0.sav", "ZA7572_v1-0-0.sav")
+
+eb_waves <- read_surveys(file.path(gesis_dir, climate_change_files), .f='read_spss')
+save ( eb_waves,  file = file.path("not_included/eb_climate_change_waves.rda"))
+```
+
+The raw data files are pre-processed by GESIS, but they are not suitable for longitudinal analysis. 
+
+```{r create_metadata, eval=FALSE}
+eb_climate_metadata <- lapply ( X = eb_waves, FUN = metadata_create )
+eb_climate_metadata <- do.call(rbind, eb_climate_metadata)
+```
+
+At this point should have the surveys in a list in memory:
+
+```{r survey_files, echo=FALSE}
+document_waves (eb_waves) 
+```
+
+And important metadata for the harmonization of the survey answers:
+
+```{r}
+head(eb_climate_metadata)
+```
+
+
+## Harmonize variable names
+
+Let's take a look at the variable labels. In ZA5877_v2-0-0.sav and ZA6595_v3-0-0.sav we actually find the same questionnaire item on the same position (Question Block 46, first item) but the label is different.
+
+```{r}
+eb_climate_metadata %>%
+  select ( all_of ( c("filename", "var_name_orig", "label_orig"))) %>%
+  filter ( grepl ("^qa4_1", var_name_orig ))
+```
+The value labels, particularly in the case of simple choice variables is even messier. 
+A bit of normalization will help later!
+
+```{r}
+eb_climate_metadata <- eb_climate_metadata  %>%
+  dplyr::mutate ( var_label = var_label_normalize(label_orig) ) %>%
+  dplyr::mutate ( var_name = val_label_normalize(var_label) )
+```
+
+We have a map to the files, and we need to harmonize the data in two steps. First, we have harmonize the variable names, to make sure that we can match identical survey items from different surveys.  For example, the age_exact variable should be always called age_exact, in all surveys that we work with.  In the next step, we must make sure that all categorical variables are labelled exactly the same. For example, when "Climate change" is not selected from a selection list, we make sure that it is consistently labelled as 'not_mentioned'.
+
+
+```{r}
+hw <- harmonize_var_names ( eb_waves, eb_climate_metadata ) %>%
+  subset_waves ( subset_names = c("uniqid", "serious_world_problems_first", 
+                                  "serious_world_problems_climate_change"))
+```
+
+The result is a list of subsetted surveys.  The survey is a special class in retroharmonize which contains the surveys coding metadata and history.
+
+```{r}
+print(head(hw[[1]]))
+print(head(hw[[2]]))
+```
+
+
+```{r}
+climate_awareness_metadata <- eb_climate_metadata %>%
+  mutate ( var_label_std = var_label_normalize(.data$label_orig) ) %>%
+  filter ( .data$var_label_std  %in% c("serious world problems first", 
+                                       "serious world problems climate change") |
+             .data$var_name_orig == "rowid"
+           ) 
+
+```
+
+```{r}
+value_labels <- collect_val_labels(climate_awareness_metadata)
+value_labels
+```
+We will code DK as declined, which is a missing value. In single choice format, climate change is coded "Mentioned", and in multiple Choice it is "Climate Change". We will use a simple binary codeing, 1 for "Mentioned" and "Climate change",  and "Declined" as a missing value.  An alternative coding could treat "None (SPONTANEOUS)" as a missing value, too.
+
+```{r}
+label_0 <- value_labels[!value_labels %in% c("Mentioned", "Climate change", "DK")]
+label_1 <- c("Mentioned", "Climate change")
+```
+
+Missing values always require judgement, so let's have a look at them. In Eurobarometer, "DK" usually means that the interviewee refused to answer, and "Inap." means that an answer option was inappropriate (and not asked) from certain groups. I would treat them as two categories in a descriptive analysis, because people who deny an answer still have some attitudes, while the Inap data is logically missing - it in fact the SPSS version of R's NA value.
+
+```{r}
+na_labels <- collect_na_labels(climate_awareness_metadata)
+na_labels
+```
+
+retroharmonize has a generic function for recoding categorical variables, called `harmonize_values()`. I think it makes the code easier to read and modify if we create a new, specialized function that contains the parameter as a list type for the conversion of this variable.
+
+The following function will give both a categorical and a dummy-like, numeric, indicator representation to the answers.  It is not a real dummy though, especially after country- and regional subsetting some variables may have zero variance.
+
+```{r}
+harmonize_serious_problems <- function(x) {
+  label_list <- list(
+    from = c(label_0, label_1, na_labels), 
+    to = c( rep ( "selected", length(label_0) ),   # use the same order as in from!
+            rep ( "not_selected", length(label_1) ),
+           "do_not_know", "inap", "inap", "inap"), 
+    numeric_values = c(rep ( 0, length(label_0) ), # use the same order as in from!
+                       rep ( 1, length(label_1) ),
+                       99997,99999,99999,99999)
+  )
+
+  harmonize_values(x, 
+                   harmonize_labels = label_list, 
+                   na_values = c("do_not_know"=99997,
+                                 "declined"=99998,
+                                 "inap"=99999)
+  )
+}
+```
+
