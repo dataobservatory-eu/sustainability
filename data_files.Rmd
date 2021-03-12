@@ -2,13 +2,19 @@
 title: "Data files"
 author: "Daniel Antal, CFA"
 date: "2/19/2021"
-output: html_document
-bibliography: coal.bib
+output:
+  md_document: default
+  html_document: default
+bibliography: sustainability.bib
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
+
+In our [tutorial series](http://netzero.dataobservatory.eu/post/2021-03-04_retroharmonize_intro/), we are going to harmonize the following questionnaire items from five Eurobarometer harmonized survey files.  The Eurobarometer survey files are harmonized across countries, but they are only partially harmonized in time.
+
+All data must be downloaded from the [GESIS](https://www.gesis.org/en/home) Data Archive in Cologne. We are not affiliated with GESIS and you must read and accept their terms to use the data.
 
 ## Eurobarometer 80.2 (2013)
 

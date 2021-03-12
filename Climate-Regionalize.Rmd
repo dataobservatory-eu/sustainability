@@ -2,14 +2,14 @@
 title: "Regional Climate Change Awareness Dataset"
 author: "Daniel Antal, CFA"
 date: "3/5/2021"
-output: html_document
+output: md_document
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-```{r load-pkgs, message=FALSE}
+```{r load-pkgs, message=FALSE, warning=FALSE}
 library(regions)
 library(lubridate)
 library(dplyr)
@@ -23,11 +23,11 @@ if ( dir.exists('data-raw') ) {
 
 ## Going beyond the national level
 
-Let's start with a dirty averaging by sub-national unit.  The w1 weighting variable contains the post-stratification weight for the national samples. The Eurobarometer samples represent nations (with the exception of East and West Germany, Northern Ireland and Great Britain.) The average of the w1 variable is 1.00 for each sample, but it is not necessarily 1 for smaller territorial units. If sum(w)>1 for say, AT23 it only means that the AT23 region was undersampled relatively to the rest of Austria, and responses must be over-weighted in post-stratification.  
+Let's start with a dirty averaging by sub-national unit.  The w1 weighting variable contains the post-stratification weight for the national samples. The Eurobarometer samples represent nations (with the exception of East and West Germany, Northern Ireland and Great Britain.) The average of the `w1` variable is 1.00 for each sample, but it is not necessarily 1 for smaller territorial units. If `sum(w)>1` for say, `AT23` it only means that the `AT23` region was undersampled relatively to the rest of Austria, and responses must be over-weighted in post-stratification.  
 
-There is no way to make the samples become regionally representative, and a correct post-stratification would require further data about the sampel design. But we can simply adjust to over/undersampling by making sure that oversampled territorial averages are proportionally increased and undersampled ones are decreased. [Another 'dirty' averaging would be the use of an unweighted average, but our method is better, because it more-or-less adjusts gender and education level biases, but leaves intra-country regional biases in the sample.]
+There is no way to make the samples become regionally representative, and a correct post-stratification would require further data about the sampel design. But we can simply adjust to over/undersampling by making sure that oversampled territorial averages are proportionally increased and undersampled ones are decreased. [Another 'dirty' averaging would be the use of an unweighted average, but our method is better, because it more-or-less adjusts gender and education level biases, but leaves intra-country regional biases in the sample.] 
 
-```{r indicators}
+```{r aggregate-indicators}
 panel <- readRDS((file.path(data_raw_dir, "climate-panel.rds")))
 
 climate_data <-  panel %>%
@@ -54,7 +54,6 @@ climate_data <-  panel %>%
 
 So, we averaged, weighted and adjusted the mentioning of climate change as the world's most serious, or one of the most serious problems by NUTS regions. 
 
-
 ## Aggregation level
 
 The problem is that most statistical data is available in for the NUTS regional boundaries according to the `NUTS2016` definition.  However, GESIS uses `NUTS2013` regions, so 252 regional codes in the four survey waves are invalid.  Some data is available only on national level, but it can be projected to regional level, because small countries like Luxembourg have no regional divisions.  Larger countries like Germany are divided only on state level (`NUTS1`), while small countries are divided on `NUTS3` level. 
@@ -68,11 +67,11 @@ panel %>%
   mutate ( year = lubridate::year(date_of_interview)) %>%
   select (  all_of(c("isocntry", "geo", "region", "year") ) ) %>%
   distinct_all() %>%
-  mutate ( validate = validate_geo_code( .data$geo, nuts_year = 2016 )) %>%
+  mutate ( validate = regions::validate_geo_code( .data$geo, nuts_year = 2016 )) %>%
   count( validate )
 ```
 
-## Recoding
+## Recoding the Regions
 
 Our regions package was designed to keep track of sub-national regional boundary changes.  It can validate regional data codes, and to some extent carry out recoding, imputation or simple aggregation.  
 
@@ -93,7 +92,6 @@ regional_coding_2013 <- panel %>%
   distinct_all() %>%
   recode_nuts( nuts_year = 2013)
 
-                
 climate_data_recoded <- climate_data %>% 
   left_join ( regional_coding_2016, by = 'geo' ) %>%
   left_join ( regional_coding_2013 %>% 
@@ -105,10 +103,10 @@ climate_data_recoded <- climate_data %>%
 
 
 ```{r save-to-tempdir}
-saveRDS ( climate_data_recoded , file.path(tempdir(), "climate_panel_recoded.rds"), version = 2)
+saveRDS ( climate_data_recoded , file.path(tempdir(), "climate_panel_recoded_agr.rds"), version = 2)
 ```
 
 ```{r copy-file, eval=TRUE}
 # not evaluated
-saveRDS( climate_data_recoded , file = file.path("data-raw", "climate-panel_recoded.rds"))
+saveRDS( climate_data_recoded , file = file.path("data-raw", "climate_panel_recoded_agr.rds"))
 ```
