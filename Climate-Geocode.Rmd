@@ -83,8 +83,6 @@ plot(fit, uniform=TRUE,
 text(fit, use.n=TRUE, all=TRUE, cex=.8)
 ```
 
-
-
 ```{r save-to-tempdir}
 saveRDS ( climate_awareness_air , file.path(tempdir(), "climate_panel_recoded.rds"), version = 2)
 ```
