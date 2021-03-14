@@ -25,7 +25,7 @@ The first results of our longitudinal table [were difficult to map](post/2021-03
 
 ## Recoding the Regions
 
-Recoding means that the boundaries are unchanged, but the country changed the names/codes of regions, because there were other boundary changes which did not affect our observation unit. We explain the problem and the solution in greater detail in [our tutorial](http://netzero.dataobservatory.eu/post/2021-03-06-regions-climate/) that aggregates the data on regional levels.
+Recoding means that the boundaries are unchanged, but the country changed the names and codes of regions because there were other boundary changes which did not affect our observation unit. We explain the problem and the solution in greater detail in [our tutorial](http://netzero.dataobservatory.eu/post/2021-03-06-regions-climate/) that aggregates the data on regional levels.
 
 ```{r recoding}
 panel <- readRDS((file.path(data_raw_dir, "climate-panel.rds")))
@@ -56,12 +56,12 @@ climate_awareness_air <- climate_data_geocode %>%
   filter ( complete.cases(.) ) 
 ```
 
-The `climate_awareness_air` data frame contains the answers of `r nrow(climate_awareness_air)` individual respondents.  `r paste0(round(mean(climate_awareness_air$serious_world_problems_first)*100,2), "%")` thought that climate change was the most serious world problem and `r paste0(round(mean(climate_awareness_air$serious_world_problems_climate_change)*100,2), "%")` mentioned climate change as one of the three most important global problems.
+The `climate_awareness_air` data frame contains the answers of `r nrow(climate_awareness_air)` individual respondents. `r paste0(round(mean(climate_awareness_air$serious_world_problems_first)*100,2), "%")` thought that climate change was the most serious world problem and `r paste0(round(mean(climate_awareness_air$serious_world_problems_climate_change)*100,2), "%")` mentioned climate change as one of the three most important global problems.
 
 ```{r summary-dataset}
 summary ( climate_awareness_air  )
 ```
-Let's see a simple CART tree!  We remove the regional codes, because there are very serious differences among regional climate awareness. These differences, together with education level, and the year we are talking about, are the most important predictors of thinking about climate change as the most important global problem in Europe.
+Let's see a simple CART tree! We remove the regional codes, because there are very serious differences among regional climate awareness. These differences, together with education level, and the year we are talking about, are the most important predictors of thinking about climate change as the most important global problem in Europe.
 
 ```{r rpart}
 # Classification Tree with rpart
