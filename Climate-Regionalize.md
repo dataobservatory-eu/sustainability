@@ -10,7 +10,7 @@
 
 ## Going beyond the national level
 
-Let’s start with a dirty averaging by sub-national unit. The w1
+Let’s start with a ‘dirty’ averaging by sub-national unit. The w1
 weighting variable contains the post-stratification weight for the
 national samples. The Eurobarometer samples represent nations (with the
 exception of East and West Germany, Northern Ireland and Great Britain.)
@@ -21,8 +21,8 @@ to the rest of Austria, and responses must be over-weighted in
 post-stratification.
 
 There is no way to make the samples become regionally representative,
-and a correct post-stratification would require further data about the
-sampel design. But we can simply adjust to over/undersampling by making
+and correct post-stratification would require further data about the
+sample design. But we can simply adjust to over/undersampling by making
 sure that oversampled territorial averages are proportionally increased
 and undersampled ones are decreased. \[Another ‘dirty’ averaging would
 be the use of an unweighted average, but our method is better, because
@@ -51,20 +51,20 @@ intra-country regional biases in the sample.\]
         climate_mentioned = serious_world_problems_climate_change / mean_w1
         ) 
 
-So, we averaged, weighted and adjusted the mentioning of climate change
+So, we averaged, weighted, and adjusted the mentioning of climate change
 as the world’s most serious, or one of the most serious problems by NUTS
 regions.
 
 ## Aggregation level
 
-The problem is that most statistical data is available in for the NUTS
+The problem is that most statistical data is available for the NUTS
 regional boundaries according to the `NUTS2016` definition. However,
 GESIS uses `NUTS2013` regions, so 252 regional codes in the four survey
 waves are invalid. Some data is available only on national level, but it
 can be projected to regional level, because small countries like
 Luxembourg have no regional divisions. Larger countries like Germany are
-divided only on state level (`NUTS1`), while small countries are divided
-on `NUTS3` level.
+divided only on the state level (`NUTS1`), while small countries are
+divided to the `NUTS3` level.
 
 This leads to various problems. Many data is available only on `NUTS2`
 level, in which case `NUTS1` data should be projected to its constituent
@@ -95,10 +95,10 @@ extent carry out recoding, imputation or simple aggregation.
     boundary changes which did not affect our observation unit.
 -   Imputation must not be done with usual, general imputation tools,
     because our data is regionally structured. However, some imputations
-    are very simple, because we can use equality equasions like `MT` =
+    are very simple, because we can use equality equations like `MT` =
     `MT0`, `MT00`.
 -   Often the boundary change is additive, and merged territorial units
-    can simple aggregated for comparison in earlier data.
+    can be simply aggregated for comparison in earlier data.
 
 <!-- -->
 

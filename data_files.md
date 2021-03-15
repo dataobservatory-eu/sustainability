@@ -28,7 +28,7 @@ GESIS Data Archive, Cologne. ZA5877 Data file Version 2.0.0,
 `QA1b Which others do you consider to be serious problems?` (multiple
 choice)
 
-`QA2 And how serious a problem do you think climate change is at this moment? Please use a scale from 1 to 10, with '1' meaning it is "not at all a serious problem`
+`QA2 And how serious a problem do you think climate change is at this moment? Please use a scale from 1 to 10, with '1' meaning it is "not at all a serious problem"`
 (scale 1-10)
 
 `QA4 To what extent do you agree or disagree with each of the following statements? - Fighting climate change and using energy more efficiently can boost the economy and jobs in the EU`
@@ -37,7 +37,7 @@ choice)
 `QA4 To what extent do you agree or disagree with each of the following statements? - Reducing fossil fuel imports from outside the EU could benefit the EU economically`
 (agreement-disagreement 4-scale)
 
-`QA5 Have   you personally  taken   any action  to  fight   climate change  over    the past    six months?`
+`QA5 Have   you personally taken any action to fight climate change over the past six months?`
 (binary)
 
 ## Eurobarometer 83.4 (2015)
@@ -75,25 +75,25 @@ GESIS Data Archive, Cologne. ZA6861 Data file Version 1.2.0,
 `QC1b Which others do you consider to be serious problems?` (multiple
 choice)
 
-`QC2 And how serious a problem do you think climate change is at this moment? Please use a scale from 1 to 10, with '1' meaning it is "not at all a serious problem`
+`QC2 And how serious a problem do you think climate change is at this moment? Please use a scale from 1 to 10, with '1' meaning it is "not at all a serious problem"`
 (scale 1-10)
 
 `Qc4 To what extent do you agree or disagree with each of the following statements? - Fighting  climate change  and using   energy  more    efficiently can boost   the economy and jobs in the EU`
 (agreement-disagreement 4-scale)
 
-`Qc4 To what extent do you agree or disagree with each of the following statements? - Promoting EU  expertise   in  new clean   technologies    to countries    outside the EU  can benefit the  EU economically`
+`Qc4 To what extent do you agree or disagree with each of the following statements? - Promoting EU  expertise   in  new clean   technologies    to countries    outside the EU can  benefit the EU economically`
 (agreement-disagreement 4-scale)
 
-`Qc4 To what extent do you agree or disagree with each of the following statements? - Reducing  fossil  fuel    imports from    outside the EU  can benefit the EU  economically`
+`Qc4 To what extent do you agree or disagree with each of the following statements? - Reducing  fossil  fuel    imports from outside    the EU can benefit the EU economically`
 (agreement-disagreement 4-scale)
 
-`Qc4 To what extent do you agree or disagree with each of the following statements? - Reducing  fossil  fuel    imports from    outside the EU  can increase    the security    of  EU  energy  supplies`
+`Qc4 To what extent do you agree or disagree with each of the following statements? - Reducing fossil fuel imports from outside the EU can increase the security of EU energy supplies`
 (agreement-disagreement 4-scale)
 
-`Qc4 To what extent do you agree or disagree with each of the following statements? - More  public  financial   support should  be  given   to  the transition to   clean   energies    even    if  it  means   subsidies   to  fossil  fuels   should  be  reduced.`
+`Qc4 To what extent do you agree or disagree with each of the following statements? - More public financial support should be given to the transition to clean energies even if it means subsidies to   fossil fuels should be reduced.`
 (agreement-disagreement 4-scale)
 
-`Qc5 Have   you personally  taken   any action  to  fight   climate change  over    the past    six months?`
+`Qc5 Have   you personally taken any action to fight climate change over the past six months?`
 (binary)
 
 ## Eurobarometer 90.2 (2018)
@@ -111,19 +111,19 @@ Cologne. ZA7488 Data file Version 1.0.0,
 -   Citation: [ZA7488
     Bibtex](https://search.gesis.org/ajax/bibtex.php?type=research_data&docid=ZA7488&lang=en)
 
-`QB5 To what extent do you agree or disagree with each of the following statements? - Fighting  climate change  and using   energy  more    efficiently can boost   the economy and jobs in the EU`
+`QB5 To what extent do you agree or disagree with each of the following statements? - Fighting climate change and using energy  more efficiently can boost the economy  and jobs in the EU`
 (agreement-disagreement 4-scale)
 
-`QB5 To what extent do you agree or disagree with each of the following statements? - Promoting EU  expertise   in  new clean   technologies    to countries    outside the EU  can benefit the  EU economically`
+`QB5 To what extent do you agree or disagree with each of the following statements? - Promoting EU expertise in new clean technologies to countries outside the EU  can benefit the  EU economically`
 (agreement-disagreement 4-scale)
 
-`QB5 To what extent do you agree or disagree with each of the following statements? - Reducing  fossil  fuel    imports from    outside the EU  can benefit the EU  economically`
+`QB5 To what extent do you agree or disagree with each of the following statements? - Reducing fossil fuel imports from outside the EU  can benefit the EU economically`
 (agreement-disagreement 4-scale)
 
-`QB5 To what extent do you agree or disagree with each of the following statements? - Reducing  fossil  fuel    imports from    outside the EU  can increase    the security    of  EU  energy  supplies`
+`QB5 To what extent do you agree or disagree with each of the following statements? - Reducing fossil fuel imports from outside the EU  can increase the security of EU energy supplies`
 (agreement-disagreement 4-scale)
 
-`QB5 To what extent do you agree or disagree with each of the following statements? - More  public  financial   support should  be  given   to  the transition to   clean   energies    even    if  it  means   subsidies   to  fossil  fuels   should  be  reduced.`
+`QB5 To what extent do you agree or disagree with each of the following statements? - More  public  financial   support should  be  given   to  the transition to   clean   energies even if it means   subsidies   to  fossil fuels should be reduced.`
 (agreement-disagreement 4-scale)
 
 ## Eurobarometer 91.3 (2019)
@@ -153,7 +153,7 @@ Cologne. ZA7572 Data file Version 1.0.0,
 `QB4 To what extent do you agree or disagree with each of the following statements? - Adapting to the adverse impacts of climate change can have positive outcomes for citizens in the EU`
 (agreement-disagreement 4-scale)
 
-`QB5 Have   you personally  taken   any action  to  fight   climate change  over    the past    six months?`
+`QB5 Have   you personally taken    any action to fight climate change  over the past six   months?`
 (binary)
 
 ## References
