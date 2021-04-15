@@ -18,6 +18,19 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 <!-- badges: end -->
 
+Please, note that the `README.md` is generated from `README.Rmd.` Please edit the `.Rmd` file.
+
+## Directories
+
+`data`: all finalized, reproducible datasets.
+`data-raw`: all data that is work-in-progress.
+`not_included`: your own scratch directory, not synchronized to github.
+`R`: R language scripts
+`Python`: Python language scripts.
+`rsconnect`: rpubs connection files, not synchronized
+
+The main directory has Rmd files, which contain R or Python codes embedded in the markdown text.  Each .Rmd file has a corresponding subdirectory, such as `Eurobarometer_19_files` for `Eurobarometer_19.Rmd`. The main directory contains all `.bib` files for bibliographical references, please, reference your data sources, too.
+
 
 ## Processed Files From 2020
 
