@@ -1,6 +1,6 @@
 #Project specific 
 
-^not_included
+not_included/
 
 # History files
 .Rhistory
